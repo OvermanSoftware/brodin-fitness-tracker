@@ -64,7 +64,7 @@ export const PhysiqueTracking = () => {
       const { error } = await supabaseClient.from('physique_snapshots').insert([
         {
           user_id: basicInfo.user_id,
-          image_url: imageUrls, // assuming this column is of type text[]
+          image_url: imageUrls,
           note: data.notes,
           weight_lbs: data.weight,
           body_fat_percent: data.bodyFat,
@@ -107,17 +107,7 @@ export const PhysiqueTracking = () => {
               <Accordion.Panel>
                 <Divider size={2} my={'xs'} />
 
-                <Text>Notes</Text>
-                <Controller
-                  name="notes"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Textarea {...field} autosize minRows={4} maxRows={10} />
-                  )}
-                />
-
-                <Text>Weight (kg)</Text>
+                <Text>Weight (lbs)</Text>
                 <Controller
                   name="weight"
                   control={control}
@@ -144,6 +134,16 @@ export const PhysiqueTracking = () => {
                       {...field}
                       onChange={(val) => field.onChange(val ?? 0)}
                     />
+                  )}
+                />
+
+                <Text>Notes</Text>
+                <Controller
+                  name="notes"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Textarea {...field} autosize minRows={4} maxRows={10} />
                   )}
                 />
               </Accordion.Panel>
@@ -324,7 +324,7 @@ export const PhysiqueTracking = () => {
               </Accordion.Panel>
             </Accordion.Item>
           </Accordion>
-          <Button onClick={close} type="submit">
+          <Button onClick={close} type="submit" fullWidth mt="md">
             Add Snapshot
           </Button>
         </form>
