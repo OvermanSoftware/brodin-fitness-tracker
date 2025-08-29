@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { MainPage } from '../../components/MainPage';
 import { useDisclosure } from '@mantine/hooks';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { PhysiqueSnapshotForm } from '../../features/settings/types/PhysiqueSnapshotForm';
 import { supabaseClient } from '../supabaseClient';
@@ -25,7 +25,7 @@ export const PhysiqueTracking = () => {
   const { handleSubmit, control } = useForm<PhysiqueSnapshotForm>();
   const { basicInfo } = useBasicInfo();
 
-  const uploadImageGetUrls = async (files: File[], userId: string) => {
+  const uploadImageGetUrls = useCallback(async (files: File[], userId: string) => {
     const uploadedUrls: string[] = [];
 
     for (const file of files) {
@@ -47,7 +47,7 @@ export const PhysiqueTracking = () => {
     }
 
     return uploadedUrls;
-  };
+  }, []);
 
   const onSubmit = handleSubmit(async (data) => {
     if (!basicInfo?.user_id) {
